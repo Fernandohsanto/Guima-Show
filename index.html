@@ -26,9 +26,6 @@
         #tela {
             width: 100vw;
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             background: #000;
             cursor: pointer;
         }
@@ -59,27 +56,65 @@
         const tela = document.getElementById("tela");
         const imagem = document.getElementById("imagem");
 
-        let iniciado = false;
+        let audioAtual = null;
+        let telaAtual = 1;
 
-        tela.addEventListener("click", function () {
 
-            if (iniciado) {
+        function tocarAudio(nome) {
+
+            if (audioAtual) {
+                audioAtual.pause();
+                audioAtual.currentTime = 0;
+            }
+
+            audioAtual = new Audio(nome);
+
+            audioAtual.play().catch(function(erro) {
+                console.log("Áudio bloqueado pelo navegador:", erro);
+            });
+        }
+
+
+        // PRIMEIRO CLIQUE
+        // Libera o áudio e passa da Tela 1 para a Tela 2
+        tela.addEventListener("click", function() {
+
+            if (telaAtual !== 1) {
                 return;
             }
 
-            iniciado = true;
+            telaAtual = 2;
 
-            const audio = new Audio(
-                "Vai%20comecar%20o%20show%20do%20milhao.mp3"
+            // Troca a imagem
+            imagem.src = "regras.png";
+
+            // Para a música da Tela 1
+            if (audioAtual) {
+                audioAtual.pause();
+                audioAtual.currentTime = 0;
+            }
+
+            // Toca o áudio da Tela 2
+            tocarAudio("Vai%20comecar%20o%20show%20do%20milhao.mp3");
+
+            // Não precisa mais clicar na Tela 1
+            tela.style.cursor = "default";
+
+        });
+
+
+        // TENTATIVA DE TOCAR A MÚSICA DA TELA 1
+        window.addEventListener("load", function() {
+
+            audioAtual = new Audio(
+                "M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
             );
 
-            audio.play();
+            audioAtual.play().catch(function() {
 
-            audio.addEventListener("ended", function () {
-
-                imagem.src = "regras.png";
-
-                tela.style.cursor = "default";
+                console.log(
+                    "O navegador bloqueou o áudio automático."
+                );
 
             });
 

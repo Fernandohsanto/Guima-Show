@@ -6,7 +6,8 @@
     <title>Guima Show</title>
 
     <style>
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -24,8 +25,8 @@
         #tela {
             width: 100vw;
             height: 100vh;
-            background: #000;
             cursor: pointer;
+            background: #000;
         }
 
         #imagem {
@@ -49,21 +50,15 @@
         const imagem = document.getElementById("imagem");
 
         // ==========================================
-        // ÁUDIO DA PRIMEIRA TELA
+        // MÚSICA TEMA - PRIMEIRA TELA
         // ==========================================
 
         const musicaTema = new Audio(
-            "./M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
+            "https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/principal/M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
         );
 
+        musicaTema.preload = "auto";
         musicaTema.loop = false;
-
-        // Tenta iniciar automaticamente
-        window.addEventListener("load", function () {
-            musicaTema.play().catch(function () {
-                console.log("O navegador bloqueou o autoplay.");
-            });
-        });
 
 
         // ==========================================
@@ -71,38 +66,59 @@
         // ==========================================
 
         const musicaRegras = new Audio(
-            "./Vai%20comecar%20o%20show%20do%20milhao.mp3"
+            "https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/principal/Vai%20comecar%20o%20show%20do%20milhao.mp3"
         );
 
+        musicaRegras.preload = "auto";
         musicaRegras.loop = false;
 
 
         // ==========================================
-        // CONTROLE DAS TELAS
+        // TELA INICIAL
         // ==========================================
 
         let telaAtual = 1;
 
 
+        // Tenta tocar automaticamente
+        window.addEventListener("load", function () {
+
+            musicaTema.play().catch(function () {
+                console.log("Autoplay bloqueado. Aguardando clique.");
+            });
+
+        });
+
+
+        // ==========================================
+        // CLIQUE NA TELA
+        // ==========================================
+
         tela.addEventListener("click", function () {
 
-            // PRIMEIRA TELA
+            // PRIMEIRO CLIQUE
             if (telaAtual === 1) {
 
+                // Garante que a música tema comece
+                musicaTema.play().catch(function (erro) {
+                    console.log("Erro ao tocar música:", erro);
+                });
+
+                // Vai para a tela de regras
                 telaAtual = 2;
 
-                // Para a música da primeira tela
+                // Para a música tema
                 musicaTema.pause();
                 musicaTema.currentTime = 0;
 
-                // Muda para REGRAS
+                // Troca a imagem
                 imagem.src = "./regras.png";
 
                 // Toca o áudio das regras
                 musicaRegras.currentTime = 0;
 
-                musicaRegras.play().catch(function () {
-                    console.log("Áudio das regras bloqueado.");
+                musicaRegras.play().catch(function (erro) {
+                    console.log("Erro ao tocar áudio das regras:", erro);
                 });
             }
 

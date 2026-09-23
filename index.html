@@ -51,8 +51,8 @@ let telaAtual = 1;
 
 
 /* ==========================================
-   TELA 1
-   Musica tema show do milhao.mp3
+   PRIMEIRA TELA
+   Musica tema show do milhão.mp3
    ========================================== */
 
 const musicaTema = new Audio(
@@ -64,8 +64,8 @@ musicaTema.loop = false;
 
 
 /* ==========================================
-   TELA 2
-   ÁUDIO DAS REGRAS
+   SEGUNDA TELA
+   Vai comecar o show do milhao.mp3
    ========================================== */
 
 const musicaRegras = new Audio(
@@ -77,63 +77,77 @@ musicaRegras.loop = false;
 
 
 /* ==========================================
-   PRIMEIRA TELA
+   CLIQUE NA TELA
    ========================================== */
 
-function tocarMusicaTema() {
+tela.addEventListener("click", function () {
 
-    musicaTema.currentTime = 0;
+    /* --------------------------------------
+       PRIMEIRA TELA
+       -------------------------------------- */
 
-    musicaTema.play().catch(function(erro) {
+    if (telaAtual === 1) {
 
-        console.log("Erro ao tocar Musica tema show do milhao.mp3:", erro);
+        /*
+         * Primeiro clique:
+         * inicia a música da primeira tela.
+         */
 
-    });
-}
+        musicaTema.currentTime = 0;
+
+        musicaTema.play().catch(function (erro) {
+            console.log("Erro ao tocar música tema:", erro);
+        });
 
 
-/* ==========================================
-   TENTA AUTOPLAY
-   ========================================== */
+        /*
+         * NÃO muda de tela neste clique.
+         *
+         * A primeira tela continua aparecendo
+         * enquanto a música toca.
+         */
 
-window.addEventListener("load", function() {
+        return;
+    }
 
-    tocarMusicaTema();
+
+    /* --------------------------------------
+       SEGUNDA TELA
+       -------------------------------------- */
+
+    if (telaAtual === 2) {
+
+        return;
+    }
 
 });
 
 
 /* ==========================================
-   CLIQUE
+   SEGUNDO CLIQUE
+   Vai para a tela de regras
    ========================================== */
 
-tela.addEventListener("click", function() {
+tela.addEventListener("dblclick", function () {
 
     if (telaAtual === 1) {
 
-        /*
-         * Se o autoplay foi bloqueado,
-         * o clique libera a música.
-         */
-
-        if (musicaTema.paused) {
-            tocarMusicaTema();
-        }
-
-        /*
-         * Vai para a segunda tela.
-         */
-
         telaAtual = 2;
 
-        imagem.src = "./regras.png";
-
         /*
-         * Para a Musica tema show do milhao.mp3.
+         * Para a música tema.
          */
 
         musicaTema.pause();
         musicaTema.currentTime = 0;
+
+
+        /*
+         * Troca para a tela de regras.
+         */
+
+        imagem.src = "./regras.png";
+
 
         /*
          * Toca o áudio das regras.
@@ -141,12 +155,9 @@ tela.addEventListener("click", function() {
 
         musicaRegras.currentTime = 0;
 
-        musicaRegras.play().catch(function(erro) {
-
+        musicaRegras.play().catch(function (erro) {
             console.log("Erro ao tocar áudio das regras:", erro);
-
         });
-
     }
 
 });

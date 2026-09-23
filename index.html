@@ -1,39 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Guima Show</title>
+    <title>Guima Show</title>
 
-<style>
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    overflow: hidden;
-}
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+        }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-img {
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain;
-    display: block;
-}
-</style>
+        #tela {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: #000;
+        }
+
+        #inicio {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
 
-<img src="inicio.png" alt="Guima Show">
+    <div id="tela">
+        <img
+            id="inicio"
+            src="inicio.png"
+            alt="Guima Show"
+        >
+    </div>
+
+    <script>
+        const tela = document.getElementById("tela");
+
+        let iniciado = false;
+
+        tela.addEventListener("click", function () {
+
+            if (iniciado) {
+                return;
+            }
+
+            iniciado = true;
+
+            const audio = new Audio(
+                "Vai%20comecar%20o%20show%20do%20milhao.mp3"
+            );
+
+            audio.play();
+
+        });
+    </script>
 
 </body>
 </html>

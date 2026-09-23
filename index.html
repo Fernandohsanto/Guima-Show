@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Guima Show</title>
 
     <style>
-        html,
-        body {
+        html, body {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -26,7 +24,6 @@
         #tela {
             width: 100vw;
             height: 100vh;
-            background: #000;
             cursor: pointer;
         }
 
@@ -41,124 +38,77 @@
 
 <body>
 
-    <div id="tela">
+<div id="tela">
+    <img id="imagem" src="./inicio.png.png" alt="Guima Show">
+</div>
 
-        <img
-            id="imagem"
-            src="./inicio.png.png"
-            alt="Guima Show"
-        >
+<script>
 
-    </div>
+const tela = document.getElementById("tela");
+const imagem = document.getElementById("imagem");
 
-    <script>
-
-        const tela = document.getElementById("tela");
-        const imagem = document.getElementById("imagem");
-
-        /*
-        ==================================================
-        MÚSICA DA PRIMEIRA TELA
-        ==================================================
-        */
-
-        const musicaTema = new Audio(
-            "https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/principal/M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
-        );
-
-        musicaTema.preload = "auto";
-        musicaTema.loop = false;
+let telaAtual = 1;
 
 
-        /*
-        ==================================================
-        ÁUDIO DA TELA DE REGRAS
-        ==================================================
-        */
+/* =========================================
+   MÚSICA TEMA
+   ========================================= */
 
-        const musicaRegras = new Audio(
-            "https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/principal/Vai%20comecar%20o%20show%20do%20milhao.mp3"
-        );
+const musicaTema = new Audio(
+    "./M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
+);
 
-        musicaRegras.preload = "auto";
-        musicaRegras.loop = false;
+musicaTema.preload = "auto";
 
 
-        /*
-        ==================================================
-        TELA ATUAL
-        ==================================================
-        */
+/* =========================================
+   ÁUDIO DAS REGRAS
+   ========================================= */
 
-        let telaAtual = 1;
+const musicaRegras = new Audio(
+    "./Vai%20comecar%20o%20show%20do%20milhao.mp3"
+);
 
+musicaRegras.preload = "auto";
+
+
+/* =========================================
+   CLIQUE
+   ========================================= */
+
+tela.addEventListener("click", function () {
+
+    if (telaAtual === 1) {
 
         /*
-        ==================================================
-        AUTOPLAY
-        ==================================================
+        Primeiro clique:
+        inicia a música
         */
 
-        window.addEventListener("load", function () {
+        musicaTema.currentTime = 0;
 
-            musicaTema.play().catch(function () {
-
-                console.log(
-                    "O navegador bloqueou o autoplay."
-                );
-
+        musicaTema.play()
+            .then(function () {
+                console.log("Música tema iniciou.");
+            })
+            .catch(function (erro) {
+                console.error("Erro na música tema:", erro);
             });
 
-        });
-
 
         /*
-        ==================================================
-        CLIQUE NA TELA
-        ==================================================
+        Depois muda para REGRAS
         */
 
-        tela.addEventListener("click", function () {
+        telaAtual = 2;
 
-            /*
-            PRIMEIRO SLIDE
-            */
+        imagem.src = "./regras.png";
 
-            if (telaAtual === 1) {
+    }
 
-                /*
-                O CLIQUE LIBERA O ÁUDIO
-                */
+});
 
-                musicaTema.play().catch(function (erro) {
-
-                    console.log(
-                        "Erro ao iniciar música:",
-                        erro
-                    );
-
-                });
-
-
-                /*
-                MUDA PARA A TELA DE REGRAS
-                */
-
-                telaAtual = 2;
-
-                imagem.src = "./regras.png";
-
-
-                /*
-                IMPORTANTE:
-                A música tema NÃO é pausada aqui.
-                */
-
-            }
-
-        });
-
-    </script>
+</script>
 
 </body>
 </html>

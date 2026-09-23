@@ -47,49 +47,103 @@
 const tela = document.getElementById("tela");
 const imagem = document.getElementById("imagem");
 
-/* ==============================
-   MÚSICA DA PRIMEIRA TELA
-   ============================== */
+let telaAtual = 1;
+
+
+/* ==========================================
+   TELA 1
+   Musica tema show do milhao.mp3
+   ========================================== */
 
 const musicaTema = new Audio(
-    "./M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
+    "./Musica%20tema%20show%20do%20milh%C3%A3o.mp3"
 );
 
 musicaTema.preload = "auto";
 musicaTema.loop = false;
 
 
-/* ==============================
-   TENTAR TOCAR AUTOMATICAMENTE
-   ============================== */
+/* ==========================================
+   TELA 2
+   ÁUDIO DAS REGRAS
+   ========================================== */
 
-window.addEventListener("load", function () {
+const musicaRegras = new Audio(
+    "./Vai%20comecar%20o%20show%20do%20milhao.mp3"
+);
 
-    musicaTema.play().catch(function () {
+musicaRegras.preload = "auto";
+musicaRegras.loop = false;
 
-        console.log("Autoplay bloqueado.");
+
+/* ==========================================
+   PRIMEIRA TELA
+   ========================================== */
+
+function tocarMusicaTema() {
+
+    musicaTema.currentTime = 0;
+
+    musicaTema.play().catch(function(erro) {
+
+        console.log("Erro ao tocar Musica tema show do milhao.mp3:", erro);
 
     });
+}
+
+
+/* ==========================================
+   TENTA AUTOPLAY
+   ========================================== */
+
+window.addEventListener("load", function() {
+
+    tocarMusicaTema();
 
 });
 
 
-/* ==============================
-   PRIMEIRO CLIQUE
-   ============================== */
+/* ==========================================
+   CLIQUE
+   ========================================== */
 
-tela.addEventListener("click", function () {
+tela.addEventListener("click", function() {
 
-    /*
-     * Se a música ainda não começou,
-     * o clique inicia.
-     */
+    if (telaAtual === 1) {
 
-    if (musicaTema.paused) {
+        /*
+         * Se o autoplay foi bloqueado,
+         * o clique libera a música.
+         */
 
-        musicaTema.play().catch(function (erro) {
+        if (musicaTema.paused) {
+            tocarMusicaTema();
+        }
 
-            console.log("Erro ao tocar:", erro);
+        /*
+         * Vai para a segunda tela.
+         */
+
+        telaAtual = 2;
+
+        imagem.src = "./regras.png";
+
+        /*
+         * Para a Musica tema show do milhao.mp3.
+         */
+
+        musicaTema.pause();
+        musicaTema.currentTime = 0;
+
+        /*
+         * Toca o áudio das regras.
+         */
+
+        musicaRegras.currentTime = 0;
+
+        musicaRegras.play().catch(function(erro) {
+
+            console.log("Erro ao tocar áudio das regras:", erro);
 
         });
 

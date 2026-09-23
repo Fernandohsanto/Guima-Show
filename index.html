@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Guima Show</title>
 
     <style>
@@ -42,84 +41,56 @@
 <body>
 
     <div id="tela">
-
-        <img
-            id="imagem"
-            src="inicio.png"
-            alt="Guima Show"
-        >
-
+        <img id="imagem" src="./inicio.png.png" alt="Guima Show">
     </div>
 
     <script>
-
         const tela = document.getElementById("tela");
         const imagem = document.getElementById("imagem");
 
-        let audioAtual = null;
+        // Música da primeira tela
+        const musicaTema = new Audio(
+            "./M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
+        );
+
+        // Música da tela de regras
+        const musicaRegras = new Audio(
+            "./Vai%20comecar%20o%20show%20do%20milhao.mp3"
+        );
+
+        musicaTema.loop = false;
+        musicaRegras.loop = false;
+
         let telaAtual = 1;
 
-
-        function tocarAudio(nome) {
-
-            if (audioAtual) {
-                audioAtual.pause();
-                audioAtual.currentTime = 0;
-            }
-
-            audioAtual = new Audio(nome);
-
-            audioAtual.play().catch(function(erro) {
-                console.log("Áudio bloqueado pelo navegador:", erro);
+        // Tenta iniciar a música automaticamente
+        window.addEventListener("load", function () {
+            musicaTema.play().catch(function () {
+                console.log("Autoplay bloqueado pelo navegador.");
             });
-        }
-
-
-        // PRIMEIRO CLIQUE
-        // Libera o áudio e passa da Tela 1 para a Tela 2
-        tela.addEventListener("click", function() {
-
-            if (telaAtual !== 1) {
-                return;
-            }
-
-            telaAtual = 2;
-
-            // Troca a imagem
-            imagem.src = "regras.png";
-
-            // Para a música da Tela 1
-            if (audioAtual) {
-                audioAtual.pause();
-                audioAtual.currentTime = 0;
-            }
-
-            // Toca o áudio da Tela 2
-            tocarAudio("Vai%20comecar%20o%20show%20do%20milhao.mp3");
-
-            // Não precisa mais clicar na Tela 1
-            tela.style.cursor = "default";
-
         });
 
+        // Clique na tela inicial
+        tela.addEventListener("click", function () {
 
-        // TENTATIVA DE TOCAR A MÚSICA DA TELA 1
-        window.addEventListener("load", function() {
+            if (telaAtual === 1) {
 
-            audioAtual = new Audio(
-                "M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
-            );
+                telaAtual = 2;
 
-            audioAtual.play().catch(function() {
+                // Para a música da primeira tela
+                musicaTema.pause();
+                musicaTema.currentTime = 0;
 
-                console.log(
-                    "O navegador bloqueou o áudio automático."
-                );
+                // Troca para a tela de regras
+                imagem.src = "./regras.png";
 
-            });
-
+                // Toca o áudio das regras
+                musicaRegras.currentTime = 0;
+                musicaRegras.play().catch(function () {
+                    console.log("Áudio das regras bloqueado.");
+                });
+            }
         });
-
     </script>
 
 </body>

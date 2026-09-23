@@ -29,7 +29,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
             background: #000;
         }
 
@@ -52,25 +51,20 @@
         >
     </div>
 
+    <audio
+        id="audioInicio"
+        src="Vai%20comecar%20o%20show%20do%20milhao.mp3"
+        autoplay
+        preload="auto">
+    </audio>
+
     <script>
-        const tela = document.getElementById("tela");
+        const audio = document.getElementById("audioInicio");
 
-        let iniciado = false;
-
-        tela.addEventListener("click", function () {
-
-            if (iniciado) {
-                return;
-            }
-
-            iniciado = true;
-
-            const audio = new Audio(
-                "Vai%20comecar%20o%20show%20do%20milhao.mp3"
-            );
-
-            audio.play();
-
+        window.addEventListener("load", function () {
+            audio.play().catch(function () {
+                console.log("O navegador bloqueou o autoplay com som.");
+            });
         });
     </script>
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Guima Show</title>
 
     <style>
@@ -25,8 +26,8 @@
         #tela {
             width: 100vw;
             height: 100vh;
-            cursor: pointer;
             background: #000;
+            cursor: pointer;
         }
 
         #imagem {
@@ -41,7 +42,13 @@
 <body>
 
     <div id="tela">
-        <img id="imagem" src="./inicio.png.png" alt="Guima Show">
+
+        <img
+            id="imagem"
+            src="./inicio.png.png"
+            alt="Guima Show"
+        >
+
     </div>
 
     <script>
@@ -49,9 +56,11 @@
         const tela = document.getElementById("tela");
         const imagem = document.getElementById("imagem");
 
-        // ==========================================
-        // MÚSICA TEMA - PRIMEIRA TELA
-        // ==========================================
+        /*
+        ==================================================
+        MÚSICA DA PRIMEIRA TELA
+        ==================================================
+        */
 
         const musicaTema = new Audio(
             "https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/principal/M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
@@ -61,9 +70,11 @@
         musicaTema.loop = false;
 
 
-        // ==========================================
-        // ÁUDIO DA TELA DE REGRAS
-        // ==========================================
+        /*
+        ==================================================
+        ÁUDIO DA TELA DE REGRAS
+        ==================================================
+        */
 
         const musicaRegras = new Audio(
             "https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/principal/Vai%20comecar%20o%20show%20do%20milhao.mp3"
@@ -73,53 +84,76 @@
         musicaRegras.loop = false;
 
 
-        // ==========================================
-        // TELA INICIAL
-        // ==========================================
+        /*
+        ==================================================
+        TELA ATUAL
+        ==================================================
+        */
 
         let telaAtual = 1;
 
 
-        // Tenta tocar automaticamente
+        /*
+        ==================================================
+        AUTOPLAY
+        ==================================================
+        */
+
         window.addEventListener("load", function () {
 
             musicaTema.play().catch(function () {
-                console.log("Autoplay bloqueado. Aguardando clique.");
+
+                console.log(
+                    "O navegador bloqueou o autoplay."
+                );
+
             });
 
         });
 
 
-        // ==========================================
-        // CLIQUE NA TELA
-        // ==========================================
+        /*
+        ==================================================
+        CLIQUE NA TELA
+        ==================================================
+        */
 
         tela.addEventListener("click", function () {
 
-            // PRIMEIRO CLIQUE
+            /*
+            PRIMEIRO SLIDE
+            */
+
             if (telaAtual === 1) {
 
-                // Garante que a música tema comece
+                /*
+                O CLIQUE LIBERA O ÁUDIO
+                */
+
                 musicaTema.play().catch(function (erro) {
-                    console.log("Erro ao tocar música:", erro);
+
+                    console.log(
+                        "Erro ao iniciar música:",
+                        erro
+                    );
+
                 });
 
-                // Vai para a tela de regras
+
+                /*
+                MUDA PARA A TELA DE REGRAS
+                */
+
                 telaAtual = 2;
 
-                // Para a música tema
-                musicaTema.pause();
-                musicaTema.currentTime = 0;
-
-                // Troca a imagem
                 imagem.src = "./regras.png";
 
-                // Toca o áudio das regras
-                musicaRegras.currentTime = 0;
 
-                musicaRegras.play().catch(function (erro) {
-                    console.log("Erro ao tocar áudio das regras:", erro);
-                });
+                /*
+                IMPORTANTE:
+                A música tema NÃO é pausada aqui.
+                */
+
             }
 
         });

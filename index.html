@@ -50,61 +50,106 @@ const imagem = document.getElementById("imagem");
 let telaAtual = 1;
 
 
-/* =========================================
-   MÚSICA TEMA
-   ========================================= */
+/* ==========================================
+   ÁUDIO DA TELA 1
+   ========================================== */
 
 const musicaTema = new Audio(
     "./M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3"
 );
 
 musicaTema.preload = "auto";
+musicaTema.loop = false;
 
 
-/* =========================================
-   ÁUDIO DAS REGRAS
-   ========================================= */
+/* ==========================================
+   ÁUDIO DA TELA 2
+   ========================================== */
 
 const musicaRegras = new Audio(
     "./Vai%20comecar%20o%20show%20do%20milhao.mp3"
 );
 
 musicaRegras.preload = "auto";
+musicaRegras.loop = false;
 
 
-/* =========================================
-   CLIQUE
-   ========================================= */
+/* ==========================================
+   PRIMEIRA TELA
+   ========================================== */
 
-tela.addEventListener("click", function () {
+function iniciarMusicaTema() {
+
+    musicaTema.currentTime = 0;
+
+    musicaTema.play().catch(function(erro) {
+        console.log("Não foi possível iniciar a música:", erro);
+    });
+}
+
+
+/* ==========================================
+   CLIQUE NA TELA
+   ========================================== */
+
+tela.addEventListener("click", function() {
+
+    /* --------------------------------------
+       TELA 1 → TELA 2
+       -------------------------------------- */
 
     if (telaAtual === 1) {
 
         /*
-        Primeiro clique:
-        inicia a música
-        */
-
-        musicaTema.currentTime = 0;
-
-        musicaTema.play()
-            .then(function () {
-                console.log("Música tema iniciou.");
-            })
-            .catch(function (erro) {
-                console.error("Erro na música tema:", erro);
-            });
-
+         * O clique inicia a música da primeira tela.
+         */
+        iniciarMusicaTema();
 
         /*
-        Depois muda para REGRAS
-        */
-
+         * Troca a imagem.
+         */
         telaAtual = 2;
 
         imagem.src = "./regras.png";
 
+
+        /*
+         * Para a música da primeira tela
+         * quando entramos na segunda.
+         */
+        musicaTema.pause();
+        musicaTema.currentTime = 0;
+
+
+        /*
+         * Toca o áudio das regras.
+         */
+        musicaRegras.currentTime = 0;
+
+        musicaRegras.play().catch(function(erro) {
+            console.log("Não foi possível iniciar o áudio das regras:", erro);
+        });
     }
+
+});
+
+
+/* ==========================================
+   TENTA AUTOPLAY DA PRIMEIRA TELA
+   ========================================== */
+
+window.addEventListener("load", function() {
+
+    musicaTema.play().catch(function() {
+
+        /*
+         * Se o navegador bloquear autoplay,
+         * o áudio será liberado no clique.
+         */
+
+        console.log("Autoplay bloqueado pelo navegador.");
+
+    });
 
 });
 

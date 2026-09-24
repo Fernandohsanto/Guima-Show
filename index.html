@@ -40,7 +40,7 @@ const audioPerguntas=new Audio(BASE+"M%C3%BAsica%20suspense%20de%20perguntas.mp3
 const audioTema=new Audio(BASE+"Musica%20tema%20show%20do%20milh%C3%A3o.mp3");
 const audioRegras=new Audio(BASE+"Vai%20comecar%20o%20show%20do%20milhao.mp3");
 const audioConhecer=new Audio(BASE+"Vamos%20conhecer%20o%20nosso%20participante%20.mp3");
-const audioOuro1=new Audio(BASE+"1%20Mil.mp3");
+const audioOuro1=new Audio("https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/1%20Mil.mp3");
 const boaSorteAudio=new Audio("https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/Boa%20Sorte.mp3");
 boaSorteAudio.preload="auto";
 
@@ -89,7 +89,7 @@ nomeBox.style.display="none";
 imagem.src=ouro1Img;
 pararAudios();
 audioOuro1.play().catch(()=>{});
-setTimeout(mostrarPergunta1, 1200);
+audioOuro1.onended=mostrarPergunta1;
 }
 
 function mostrarPergunta1(){

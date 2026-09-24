@@ -52,6 +52,7 @@ boaSorteAudio.preload="auto";
 let etapa=1;
 let participante="";
 let pontos=0;
+let temporizadorParticipante=null;
 function atualizarParticipante(){
 participanteNome.textContent=participante;
 participantePontos.textContent="R$ "+pontos.toLocaleString("pt-BR");
@@ -125,6 +126,8 @@ if(!nome){nomeInput.focus();return}
 participante=nome;
 pontos=0;
 atualizarParticipante();
+clearTimeout(temporizadorParticipante);
+temporizadorParticipante=setTimeout(mostrarOuro1,10000);
 console.log("Participante:",participante);
 pararAudios();
 boaSorteAudio.currentTime=0;

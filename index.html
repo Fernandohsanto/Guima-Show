@@ -39,7 +39,7 @@ const regrasImg=BASE+"regras.PNG";
 const conhecerImg="https://github.com/Fernandohsanto/Guima-Show/raw/refs/heads/main/vamos%20conhecer%20participante.png";
 const ouro1Img=BASE+"ouro%201%20mil.PNG";
 const pergunta1Img=BASE+"pergunta%201.PNG";
-const audioPerguntas=new Audio(BASE+"M%C3%BAsica%20suspense%20de%20perguntas.mp3");
+const audioPerguntas=new Audio("https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/M%C3%BAsica%20suspense%20de%20perguntas.mp3");
 audioPerguntas.preload="auto";
 
 const audioTema=new Audio(BASE+"Musica%20tema%20show%20do%20milh%C3%A3o.mp3");
@@ -110,8 +110,8 @@ function mostrarPergunta1(){
 etapa=6;
 nameBoxHide();
 imagem.src=pergunta1Img;
-pararAudios();
-audioPerguntas.load();
+audioTema.pause();audioRegras.pause();audioConhecer.pause();audioOuro1.pause();boaSorteAudio.pause();
+audioPerguntas.currentTime=0;
 audioPerguntas.play().catch(()=>{});
 }
 

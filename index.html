@@ -10,9 +10,10 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden}
 body{display:flex;align-items:center;justify-content:center}
 #tela{position:relative;width:100vw;height:100vh;background:#000}
 #imagem{width:100%;height:100%;object-fit:contain;display:block;cursor:pointer}
-#nomeBox{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:100%;z-index:5;pointer-events:none}
-#nome{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(420px,70vw);height:54px;padding:0 18px;border:0;background:transparent;color:#111;font-size:24px;text-align:center;outline:none;pointer-events:auto}
-#entrar{position:absolute;left:50%;top:65%;transform:translate(-50%,-50%);width:180px;height:55px;border:0;background:transparent;color:transparent;cursor:pointer;pointer-events:auto}
+#nomeBox{display:none;position:absolute;inset:0;z-index:5;pointer-events:none}
+#nome{position:absolute;left:67.5%;top:93.2%;transform:translate(-50%,-50%);width:33%;height:4.3%;padding:0 12px;border:0;background:transparent;color:#111;font-size:20px;text-align:left;outline:none;pointer-events:auto}
+#nome::placeholder{color:#777;opacity:1}
+#entrar{position:absolute;left:67.5%;top:101%;transform:translate(-50%,-50%);width:33%;height:7%;border:0;background:transparent;color:transparent;cursor:pointer;pointer-events:auto}
 </style>
 </head>
 <body>

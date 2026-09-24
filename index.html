@@ -64,7 +64,9 @@ function pararAudios(){
 
 function mostrarInicio(){
 etapa=1;
-nomeBox.style.display="none";
+nomeBox.style.display="block";
+entrar.style.display="block";
+nomeInput.style.display="none";
 participanteInfo.style.display="none";
 imagem.src=inicioImg;
 pararAudios();
@@ -91,6 +93,8 @@ function mostrarTelaConhecer(){
 etapa=4;
 imagem.src=conhecerImg;
 nomeBox.style.display="block";
+nomeInput.style.display="block";
+entrar.style.display="block";
 nomeInput.value="";
 setTimeout(()=>nomeInput.focus(),100);
 }
@@ -140,6 +144,7 @@ if(etapa===5){mostrarPergunta1();return}
 
 entrar.addEventListener("click",function(e){
 e.stopPropagation();
+if(etapa===1){mostrarRegras();return}
 entrarParticipante();
 });
 nomeInput.addEventListener("click",e=>e.stopPropagation());

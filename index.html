@@ -2,14 +2,14 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Guima Show</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;background:#000;overflow:hidden}
 body{display:flex;align-items:center;justify-content:center}
-#tela{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:#000;cursor:pointer}
-#imagem{width:100%;height:100%;object-fit:contain;display:block}
+#tela{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
+#imagem{width:100%;height:100%;object-fit:contain;display:block;cursor:pointer}
 #nomeBox{display:none;position:absolute;left:50%;top:67%;transform:translate(-50%,-50%);width:min(420px,70vw);z-index:5}
 #nome{width:100%;height:54px;padding:0 18px;border:3px solid #fff;border-radius:10px;background:#fff;color:#111;font-size:24px;text-align:center;outline:none}
 #entrar{display:block;margin:14px auto 0;padding:12px 35px;border:0;border-radius:8px;background:#fff;color:#111;font-size:22px;font-weight:bold;cursor:pointer}
@@ -33,26 +33,21 @@ const entrar=document.getElementById("entrar");
 const telas={
 inicio:BASE+"inicio.png.png",
 regras:BASE+"regras.PNG",
-participante:BASE+"conhecer%20participante.png",
-ouro1:BASE+"ouro%201%20mil.PNG"
+conhecer:BASE+"conhecer%20participante.png"
 };
 
 const audioTema=new Audio(BASE+"Musica%20tema%20show%20do%20milh%C3%A3o.mp3");
 const audioRegras=new Audio(BASE+"Vai%20comecar%20o%20show%20do%20milhao.mp3");
-const audioParticipante=new Audio(BASE+"Vamos%20conhecer%20o%20nosso%20participante%20.mp3");
-const audioOuro1=new Audio(BASE+"1%20Mil.mp3");
+const audioConhecer=new Audio(BASE+"Vamos%20conhecer%20o%20nosso%20participante%20.mp3");
 
 let etapa=1;
 let participante="";
 
 function pararAudios(){
-[audioTema,audioRegras,audioParticipante,audioOuro1].forEach(a=>{
-a.pause();
-a.currentTime=0;
-});
+[audioTema,audioRegras,audioConhecer].forEach(a=>{a.pause();a.currentTime=0});
 }
 
-function mostrarInicio(){
+function inicio(){
 etapa=1;
 nomeBox.style.display="none";
 imagem.src=telas.inicio;
@@ -60,7 +55,7 @@ pararAudios();
 audioTema.play().catch(()=>{});
 }
 
-function mostrarRegras(){
+function regras(){
 etapa=2;
 nomeBox.style.display="none";
 imagem.src=telas.regras;
@@ -68,51 +63,43 @@ pararAudios();
 audioRegras.play().catch(()=>{});
 }
 
-function mostrarParticipante(){
+function conhecerParticipante(){
 etapa=3;
-imagem.src=telas.participante;
+nomeBox.style.display="none";
+imagem.src=telas.conhecer;
 pararAudios();
-audioParticipante.play().catch(()=>{});
+audioConhecer.play().catch(()=>{});
+}
+
+function mostrarCampoNome(){
+etapa=4;
+imagem.src=telas.conhecer;
 nomeBox.style.display="block";
 nomeInput.value="";
 setTimeout(()=>nomeInput.focus(),100);
 }
 
-function mostrarOuro1(){
-etapa=4;
-nomeBox.style.display="none";
-imagem.src=telas.ouro1;
-pararAudios();
-audioOuro1.play().catch(()=>{});
-}
-
 function entrarParticipante(){
 const nome=nomeInput.value.trim();
-if(!nome){
-nomeInput.focus();
-return;
-}
+if(!nome){nomeInput.focus();return}
 participante=nome;
 console.log("Participante:",participante);
-mostrarOuro1();
+nomeBox.style.display="none";
 }
 
-document.getElementById("tela").addEventListener("click",function(e){
-if(etapa===1){mostrarRegras();return}
-if(etapa===2){mostrarParticipante();return}
+document.getElementById("tela").addEventListener("click",function(){
+if(etapa===1){regras();return}
+if(etapa===2){conhecerParticipante();return}
+if(etapa===3){mostrarCampoNome();return}
 });
 
-entrar.addEventListener("click",function(e){
-e.stopPropagation();
-entrarParticipante();
-});
-
-nomeInput.addEventListener("click",function(e){e.stopPropagation()});
+entrar.addEventListener("click",function(e){e.stopPropagation();entrarParticipante()});
+nomeInput.addEventListener("click",e=>e.stopPropagation());
 nomeInput.addEventListener("keydown",function(e){
 if(e.key==="Enter"){e.preventDefault();entrarParticipante()}
 });
 
-window.addEventListener("load",mostrarInicio);
+window.addEventListener("load",inicio);
 </script>
 </body>
 </html>

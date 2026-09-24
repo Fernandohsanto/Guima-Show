@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Guima Show</title>
 
     <style>
@@ -38,131 +39,42 @@
 
 <body>
 
-<div id="tela">
-    <img id="imagem" src="./inicio.png.png" alt="Guima Show">
-</div>
+    <div id="tela">https://github.com/Fernandohsanto/Guima-Show/blob/main/index.html
+        <img id="imagem" src="./valor-1k.png" alt="Valor do prêmio">
+    </div>
 
-<script>
+    <script>
 
-const tela = document.getElementById("tela");
-const imagem = document.getElementById("imagem");
+        const imagem = document.getElementById("imagem");
+        const tela = document.getElementById("tela");
 
-let telaAtual = 1;
+        const valores = [
+            "./valor-1k.png",
+            "./valor-10k.png",
+            "./valor-30k.png",
+            "./valor-50k.png",
+            "./valor-100k.png",
+            "./valor-200k.png",
+            "./valor-400k.png",
+            "./valor-500k.png",
+            "./valor-1m.png"
+        ];
 
+        let valorAtual = 0;
 
-/* ==========================================
-   PRIMEIRA TELA
-   Musica tema show do milhão.mp3
-   ========================================== */
+        tela.addEventListener("click", function () {
 
-const musicaTema = new Audio(
-    "./Musica%20tema%20show%20do%20milh%C3%A3o.mp3"
-);
+            if (valorAtual < valores.length - 1) {
 
-musicaTema.preload = "auto";
-musicaTema.loop = false;
+                valorAtual++;
 
+                imagem.src = valores[valorAtual];
 
-/* ==========================================
-   SEGUNDA TELA
-   Vai comecar o show do milhao.mp3
-   ========================================== */
+            }
 
-const musicaRegras = new Audio(
-    "./Vai%20comecar%20o%20show%20do%20milhao.mp3"
-);
-
-musicaRegras.preload = "auto";
-musicaRegras.loop = false;
-
-
-/* ==========================================
-   CLIQUE NA TELA
-   ========================================== */
-
-tela.addEventListener("click", function () {
-
-    /* --------------------------------------
-       PRIMEIRA TELA
-       -------------------------------------- */
-
-    if (telaAtual === 1) {
-
-        /*
-         * Primeiro clique:
-         * inicia a música da primeira tela.
-         */
-
-        musicaTema.currentTime = 0;
-
-        musicaTema.play().catch(function (erro) {
-            console.log("Erro ao tocar música tema:", erro);
         });
 
-
-        /*
-         * NÃO muda de tela neste clique.
-         *
-         * A primeira tela continua aparecendo
-         * enquanto a música toca.
-         */
-
-        return;
-    }
-
-
-    /* --------------------------------------
-       SEGUNDA TELA
-       -------------------------------------- */
-
-    if (telaAtual === 2) {
-
-        return;
-    }
-
-});
-
-
-/* ==========================================
-   SEGUNDO CLIQUE
-   Vai para a tela de regras
-   ========================================== */
-
-tela.addEventListener("dblclick", function () {
-
-    if (telaAtual === 1) {
-
-        telaAtual = 2;
-
-        /*
-         * Para a música tema.
-         */
-
-        musicaTema.pause();
-        musicaTema.currentTime = 0;
-
-
-        /*
-         * Troca para a tela de regras.
-         */
-
-        imagem.src = "./regras.png";
-
-
-        /*
-         * Toca o áudio das regras.
-         */
-
-        musicaRegras.currentTime = 0;
-
-        musicaRegras.play().catch(function (erro) {
-            console.log("Erro ao tocar áudio das regras:", erro);
-        });
-    }
-
-});
-
-</script>
+    </script>
 
 </body>
 </html>

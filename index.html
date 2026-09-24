@@ -34,6 +34,8 @@ const inicioImg=BASE+"inicio.png.png";
 const regrasImg=BASE+"regras.PNG";
 const conhecerImg=BASE+"vamos%20participar.png";
 const ouro1Img=BASE+"ouro%201%20mil.PNG";
+const pergunta1Img=BASE+"pergunta%201.PNG";
+const audioPerguntas=new Audio(BASE+"M%C3%BAsica%20suspense%20de%20perguntas.mp3");
 
 const audioTema=new Audio(BASE+"Musica%20tema%20show%20do%20milh%C3%A3o.mp3");
 const audioRegras=new Audio(BASE+"Vai%20comecar%20o%20show%20do%20milhao.mp3");
@@ -46,7 +48,7 @@ let etapa=1;
 let participante="";
 
 function pararAudios(){
-[audioTema,audioRegras,audioConhecer,audioOuro1,boaSorteAudio].forEach(a=>{a.pause();a.currentTime=0});
+[audioTema,audioRegras,audioConhecer,audioOuro1,boaSorteAudio,audioPerguntas].forEach(a=>{a.pause();a.currentTime=0});
 }
 
 function mostrarInicio(){
@@ -87,6 +89,19 @@ nomeBox.style.display="none";
 imagem.src=ouro1Img;
 pararAudios();
 audioOuro1.play().catch(()=>{});
+setTimeout(mostrarPergunta1, 1200);
+}
+
+function mostrarPergunta1(){
+etapa=6;
+nameBoxHide();
+imagem.src=pergunta1Img;
+pararAudios();
+audioPerguntas.play().catch(()=>{});
+}
+
+function nameBoxHide(){
+nomeBox.style.display="none";
 }
 
 function entrarParticipante(){
@@ -103,6 +118,7 @@ boaSorteAudio.play().then(()=>{}).catch((erro)=>{console.error("Erro ao tocar Bo
 document.getElementById("tela").addEventListener("click",function(){
 if(etapa===1){mostrarRegras();return}
 if(etapa===2){mostrarAudioConhecer();return}
+if(etapa===5){mostrarPergunta1();return}
 });
 
 entrar.addEventListener("click",function(e){

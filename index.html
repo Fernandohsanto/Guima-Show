@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Guima Show</title>
 
     <style>
-        html, body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
             width: 100%;
             height: 100%;
             background: #000;
@@ -18,14 +22,18 @@
 
         body {
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
         }
 
         #tela {
             width: 100vw;
             height: 100vh;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
         }
 
         #imagem {
@@ -39,38 +47,182 @@
 
 <body>
 
-    <div id="tela">https://github.com/Fernandohsanto/Guima-Show/blob/main/index.html
-        <img id="imagem" src="./valor-1k.png" alt="Valor do prêmio">
+    <div id="tela">
+        <img id="imagem" src="./inicio.png.png" alt="Guima Show">
     </div>
 
     <script>
 
-        const imagem = document.getElementById("imagem");
         const tela = document.getElementById("tela");
+        const imagem = document.getElementById("imagem");
 
-        const valores = [
-            "./valor-1k.png",
-            "./valor-10k.png",
-            "./valor-30k.png",
-            "./valor-50k.png",
-            "./valor-100k.png",
-            "./valor-200k.png",
-            "./valor-400k.png",
-            "./valor-500k.png",
-            "./valor-1m.png"
-        ];
+        let etapa = 1;
 
-        let valorAtual = 0;
+        // =========================
+        // ÁUDIOS
+        // =========================
+
+        const musicaTema = new Audio(
+            "./Musica%20tema%20show%20do%20milh%C3%A3o.mp3"
+        );
+
+        const musicaRegras = new Audio(
+            "./Vai%20comecar%20o%20show%20do%20milhao.mp3"
+        );
+
+        const musica1Mil = new Audio(
+            "./1%20Mil.mp3"
+        );
+
+        musicaTema.preload = "auto";
+        musicaRegras.preload = "auto";
+        musica1Mil.preload = "auto";
+
+
+        // =========================
+        // FUNÇÃO PARA PARAR ÁUDIOS
+        // =========================
+
+        function pararTodosOsAudios() {
+
+            musicaTema.pause();
+            musicaTema.currentTime = 0;
+
+            musicaRegras.pause();
+            musicaRegras.currentTime = 0;
+
+            musica1Mil.pause();
+            musica1Mil.currentTime = 0;
+        }
+
+
+        // =========================
+        // PRIMEIRA TELA
+        // =========================
+
+        function telaInicial() {
+
+            etapa = 1;
+
+            imagem.src = "./inicio.png.png";
+
+            pararTodosOsAudios();
+
+            musicaTema.play().catch(() => {
+                console.log("Autoplay bloqueado pelo navegador.");
+            });
+        }
+
+
+        // =========================
+        // TELA DE REGRAS
+        // =========================
+
+        function telaRegras() {
+
+            etapa = 2;
+
+            imagem.src = "./regras.png";
+
+            pararTodosOsAudios();
+
+            musicaRegras.play().catch(() => {
+                console.log("Áudio das regras aguardando interação.");
+            });
+        }
+
+
+        // =========================
+        // OURO 1 MIL
+        // =========================
+
+        function telaOuro1Mil() {
+
+            etapa = 3;
+
+            imagem.src = "./ouro%201%20mil.PNG";
+
+            pararTodosOsAudios();
+
+            musica1Mil.play().catch(() => {
+                console.log("Áudio de 1 Mil aguardando interação.");
+            });
+        }
+
+
+        // =========================
+        // CLIQUE NA TELA
+        // =========================
 
         tela.addEventListener("click", function () {
 
-            if (valorAtual < valores.length - 1) {
+            // INÍCIO → REGRAS
+            if (etapa === 1) {
 
-                valorAtual++;
+                telaRegras();
 
-                imagem.src = valores[valorAtual];
+                return;
+            }
+
+
+            // REGRAS → OURO 1 MIL
+            if (etapa === 2) {
+
+                telaOuro1Mil();
+
+                return;
+            }
+
+
+            // OURO 1 MIL
+            // Por enquanto não avança.
+            // A próxima etapa será a PERGUNTA 1.
+
+            if (etapa === 3) {
+
+                return;
+            }
+
+        });
+
+
+        // =========================
+        // TENTAR INICIAR ÁUDIO
+        // NO PRIMEIRO CLIQUE
+        // =========================
+
+        document.addEventListener("click", function () {
+
+            if (etapa === 1) {
+
+                musicaTema.play().catch(() => {});
 
             }
+
+            if (etapa === 2) {
+
+                musicaRegras.play().catch(() => {});
+
+            }
+
+            if (etapa === 3) {
+
+                musica1Mil.play().catch(() => {});
+
+            }
+
+        });
+
+
+        // =========================
+        // INICIA O JOGO
+        // =========================
+
+        window.addEventListener("load", function () {
+
+            musicaTema.play().catch(() => {
+                console.log("O navegador bloqueou o autoplay.");
+            });
 
         });
 

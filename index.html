@@ -10,7 +10,7 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden}
 body{display:flex;align-items:center;justify-content:center}
 #tela{position:relative;width:min(100vw,177.7778vh);height:min(100vh,56.25vw);aspect-ratio:16/9;background:#000;overflow:hidden}
 #imagem{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;cursor:pointer}
-#nomeBox{display:none;position:absolute;right:4%;bottom:4%;z-index:5;width:min(380px,32vw);padding:18px;border-radius:14px;background:rgba(35,70,20,.96);box-shadow:0 4px 18px rgba(0,0,0,.45);pointer-events:auto}
+#participanteInfo{display:none;position:absolute;left:3%;top:3%;z-index:6;color:#fff;font-family:Arial,sans-serif;text-shadow:2px 2px 4px #000;pointer-events:none;text-align:left}#participanteNome{font-size:24px;font-weight:bold}#participantePontos{font-size:20px;margin-top:4px}#nomeBox{display:none;position:absolute;right:4%;bottom:4%;z-index:5;width:min(380px,32vw);padding:18px;border-radius:14px;background:rgba(35,70,20,.96);box-shadow:0 4px 18px rgba(0,0,0,.45);pointer-events:auto}
 #nome{display:block;width:100%;height:52px;padding:0 16px;border:2px solid #fff;border-radius:8px;background:#fff;color:#111;font-size:20px;text-align:left;outline:none}
 #entrar{display:block;width:180px;height:48px;margin:12px 0 0 auto;border:0;border-radius:8px;background:#fff;color:#111;font-size:20px;font-weight:bold;cursor:pointer}
 </style>
@@ -18,6 +18,7 @@ body{display:flex;align-items:center;justify-content:center}
 <body>
 <div id="tela">
 <img id="imagem" alt="Guima Show">
+<div id="participanteInfo"><div id="participanteNome"></div><div id="participantePontos">R$ 0</div></div>
 <div id="nomeBox">
 <input id="nome" type="text" maxlength="40" placeholder="Digite seu nome" autocomplete="off">
 <button id="entrar">ENTRAR</button>
@@ -29,6 +30,9 @@ const imagem=document.getElementById("imagem");
 const nomeBox=document.getElementById("nomeBox");
 const nomeInput=document.getElementById("nome");
 const entrar=document.getElementById("entrar");
+const participanteInfo=document.getElementById("participanteInfo");
+const participanteNome=document.getElementById("participanteNome");
+const participantePontos=document.getElementById("participantePontos");
 
 const inicioImg=BASE+"inicio.png.png";
 const regrasImg=BASE+"regras.PNG";
@@ -47,6 +51,12 @@ boaSorteAudio.preload="auto";
 
 let etapa=1;
 let participante="";
+let pontos=0;
+function atualizarParticipante(){
+participanteNome.textContent=participante;
+participantePontos.textContent="R$ "+pontos.toLocaleString("pt-BR");
+participanteInfo.style.display=participante?"block":"none";
+}
 
 function pararAudios(){
 [audioTema,audioRegras,audioConhecer,audioOuro1,boaSorteAudio,audioPerguntas].forEach(a=>{a.pause();a.currentTime=0});
@@ -55,6 +65,7 @@ function pararAudios(){
 function mostrarInicio(){
 etapa=1;
 nomeBox.style.display="none";
+participanteInfo.style.display="none";
 imagem.src=inicioImg;
 pararAudios();
 audioTema.play().catch(()=>{});
@@ -87,6 +98,8 @@ setTimeout(()=>nomeInput.focus(),100);
 function mostrarOuro1(){
 etapa=5;
 nomeBox.style.display="none";
+pontos=0;
+atualizarParticipante();
 imagem.src=ouro1Img;
 pararAudios();
 audioOuro1.play().catch(()=>{});
@@ -110,6 +123,8 @@ function entrarParticipante(){
 const nome=nomeInput.value.trim();
 if(!nome){nomeInput.focus();return}
 participante=nome;
+pontos=0;
+atualizarParticipante();
 console.log("Participante:",participante);
 pararAudios();
 boaSorteAudio.currentTime=0;

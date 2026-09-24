@@ -21,7 +21,7 @@ body{display:flex;align-items:center;justify-content:center}
 <div id="participanteInfo"><div id="participanteNome"></div><div id="participantePontos">R$ 0</div></div>
 <div id="nomeBox">
 <input id="nome" type="text" maxlength="40" placeholder="Digite seu nome" autocomplete="off">
-<button id="entrar">ENTRAR</button>
+<button id="entrar">JOGAR</button>
 </div>
 </div>
 <script>
@@ -52,7 +52,6 @@ boaSorteAudio.preload="auto";
 let etapa=1;
 let participante="";
 let pontos=0;
-let temporizadorParticipante=null;
 function atualizarParticipante(){
 participanteNome.textContent=participante;
 participantePontos.textContent="R$ "+pontos.toLocaleString("pt-BR");
@@ -126,8 +125,7 @@ if(!nome){nomeInput.focus();return}
 participante=nome;
 pontos=0;
 atualizarParticipante();
-clearTimeout(temporizadorParticipante);
-temporizadorParticipante=setTimeout(mostrarOuro1,10000);
+mostrarOuro1();
 console.log("Participante:",participante);
 pararAudios();
 boaSorteAudio.currentTime=0;

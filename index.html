@@ -39,12 +39,14 @@ const audioTema=new Audio(BASE+"Musica%20tema%20show%20do%20milh%C3%A3o.mp3");
 const audioRegras=new Audio(BASE+"Vai%20comecar%20o%20show%20do%20milhao.mp3");
 const audioConhecer=new Audio(BASE+"Vamos%20conhecer%20o%20nosso%20participante%20.mp3");
 const audioOuro1=new Audio(BASE+"1%20Mil.mp3");
+const boaSorteAudio=new Audio(BASE+"Boa%20Sorte.mp3");
+boaSorteAudio.preload="auto";
 
 let etapa=1;
 let participante="";
 
 function pararAudios(){
-[audioTema,audioRegras,audioConhecer,audioOuro1].forEach(a=>{a.pause();a.currentTime=0});
+[audioTema,audioRegras,audioConhecer,audioOuro1,boaSorteAudio].forEach(a=>{a.pause();a.currentTime=0});
 }
 
 function mostrarInicio(){
@@ -92,7 +94,10 @@ const nome=nomeInput.value.trim();
 if(!nome){nomeInput.focus();return}
 participante=nome;
 console.log("Participante:",participante);
-mostrarOuro1();
+pararAudios();
+boaSorteAudio.currentTime=0;
+boaSorteAudio.onended=mostrarOuro1;
+boaSorteAudio.play().catch(()=>mostrarOuro1());
 }
 
 document.getElementById("tela").addEventListener("click",function(){
@@ -112,9 +117,5 @@ if(e.key==="Enter"){e.preventDefault();entrarParticipante()}
 window.addEventListener("load",mostrarInicio);
 </script>
 
-<script>
-const boaSorteAudio = new Audio(BASE + "Boa%20Sorte.mp3");
-boaSorteAudio.preload = "auto";
-</script>
 </body>
 </html>

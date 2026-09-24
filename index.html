@@ -8,7 +8,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;background:#000;overflow:hidden}
 body{display:flex;align-items:center;justify-content:center}
-#tela{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
+#tela{position:relative;width:100vw;height:100vh;background:#000}
 #imagem{width:100%;height:100%;object-fit:contain;display:block;cursor:pointer}
 #nomeBox{display:none;position:absolute;left:50%;top:67%;transform:translate(-50%,-50%);width:min(420px,70vw);z-index:5}
 #nome{width:100%;height:54px;padding:0 18px;border:3px solid #fff;border-radius:10px;background:#fff;color:#111;font-size:24px;text-align:center;outline:none}
@@ -30,53 +30,61 @@ const nomeBox=document.getElementById("nomeBox");
 const nomeInput=document.getElementById("nome");
 const entrar=document.getElementById("entrar");
 
-const telas={
-inicio:BASE+"inicio.png.png",
-regras:BASE+"regras.PNG",
-conhecer:BASE+"conhecer%20participante.png"
-};
+const inicioImg=BASE+"inicio.png.png";
+const regrasImg=BASE+"regras.PNG";
+const conhecerImg=BASE+"conhecer%20participante.png";
+const ouro1Img=BASE+"ouro%201%20mil.PNG";
 
 const audioTema=new Audio(BASE+"Musica%20tema%20show%20do%20milh%C3%A3o.mp3");
 const audioRegras=new Audio(BASE+"Vai%20comecar%20o%20show%20do%20milhao.mp3");
 const audioConhecer=new Audio(BASE+"Vamos%20conhecer%20o%20nosso%20participante%20.mp3");
+const audioOuro1=new Audio(BASE+"1%20Mil.mp3");
 
 let etapa=1;
 let participante="";
 
 function pararAudios(){
-[audioTema,audioRegras,audioConhecer].forEach(a=>{a.pause();a.currentTime=0});
+[audioTema,audioRegras,audioConhecer,audioOuro1].forEach(a=>{a.pause();a.currentTime=0});
 }
 
-function inicio(){
+function mostrarInicio(){
 etapa=1;
 nomeBox.style.display="none";
-imagem.src=telas.inicio;
+imagem.src=inicioImg;
 pararAudios();
 audioTema.play().catch(()=>{});
 }
 
-function regras(){
+function mostrarRegras(){
 etapa=2;
 nomeBox.style.display="none";
-imagem.src=telas.regras;
+imagem.src=regrasImg;
 pararAudios();
 audioRegras.play().catch(()=>{});
 }
 
-function conhecerParticipante(){
+function mostrarAudioConhecer(){
 etapa=3;
 nomeBox.style.display="none";
-imagem.src=telas.conhecer;
 pararAudios();
 audioConhecer.play().catch(()=>{});
+audioConhecer.onended=mostrarTelaConhecer;
 }
 
-function mostrarCampoNome(){
+function mostrarTelaConhecer(){
 etapa=4;
-imagem.src=telas.conhecer;
+imagem.src=conhecerImg;
 nomeBox.style.display="block";
 nomeInput.value="";
 setTimeout(()=>nomeInput.focus(),100);
+}
+
+function mostrarOuro1(){
+etapa=5;
+nomeBox.style.display="none";
+imagem.src=ouro1Img;
+pararAudios();
+audioOuro1.play().catch(()=>{});
 }
 
 function entrarParticipante(){
@@ -84,22 +92,24 @@ const nome=nomeInput.value.trim();
 if(!nome){nomeInput.focus();return}
 participante=nome;
 console.log("Participante:",participante);
-nomeBox.style.display="none";
+mostrarOuro1();
 }
 
 document.getElementById("tela").addEventListener("click",function(){
-if(etapa===1){regras();return}
-if(etapa===2){conhecerParticipante();return}
-if(etapa===3){mostrarCampoNome();return}
+if(etapa===1){mostrarRegras();return}
+if(etapa===2){mostrarAudioConhecer();return}
 });
 
-entrar.addEventListener("click",function(e){e.stopPropagation();entrarParticipante()});
+entrar.addEventListener("click",function(e){
+e.stopPropagation();
+entrarParticipante();
+});
 nomeInput.addEventListener("click",e=>e.stopPropagation());
 nomeInput.addEventListener("keydown",function(e){
 if(e.key==="Enter"){e.preventDefault();entrarParticipante()}
 });
 
-window.addEventListener("load",inicio);
+window.addEventListener("load",mostrarInicio);
 </script>
 </body>
 </html>

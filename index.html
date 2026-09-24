@@ -10,78 +10,274 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden}
 body{display:flex;align-items:center;justify-content:center}
 #tela{position:relative;width:min(100vw,177.7778vh);height:min(100vh,56.25vw);aspect-ratio:16/9;background:#000;overflow:hidden}
 #imagem{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;cursor:pointer}
+
+/* PAINEL DO PARTICIPANTE */
 #participanteInfo{
 display:none;
 position:absolute;
-left:2.5%;
+left:2.2%;
 top:3%;
 z-index:20;
-width:245px;
-padding:10px 12px;
+width:270px;
+padding:12px;
 border:2px solid #d8b34a;
-border-radius:10px;
-background:linear-gradient(180deg,rgba(8,28,14,.97),rgba(20,62,25,.95));
-box-shadow:0 0 0 2px rgba(0,0,0,.45),0 6px 18px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.18);
+border-radius:12px;
+background:linear-gradient(180deg,rgba(5,24,12,.98),rgba(16,58,22,.96));
+box-shadow:0 0 0 2px rgba(0,0,0,.5),0 7px 20px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.18);
 color:#fff;
 font-family:Arial,sans-serif;
 text-shadow:1px 2px 3px #000;
 pointer-events:none;
 }
 .hudTitulo{
-font-size:11px;
-font-weight:800;
-letter-spacing:2px;
-color:#ffd84a;
-text-align:center;
-padding-bottom:6px;
-margin-bottom:7px;
-border-bottom:1px solid rgba(255,216,74,.45);
+font-size:12px;font-weight:900;letter-spacing:2px;color:#ffd84a;
+text-align:center;padding-bottom:7px;margin-bottom:8px;
+border-bottom:1px solid rgba(255,216,74,.5);
 }
 #participanteNome{
-font-size:21px;
-font-weight:800;
-text-align:center;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-margin-bottom:8px;
+font-size:22px;font-weight:900;text-align:center;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+margin-bottom:9px;
 }
 .hudLinha{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:5px 7px;
-margin-top:4px;
-border-radius:5px;
-background:rgba(0,0,0,.28);
-font-size:10px;
-font-weight:700;
-letter-spacing:1px;
+display:flex;justify-content:space-between;align-items:center;
+padding:6px 8px;margin-top:5px;border-radius:5px;
+background:rgba(0,0,0,.32);
+font-size:11px;font-weight:800;letter-spacing:1px;
 }
-.hudLinha strong{
-font-size:17px;
-color:#fff;
-}
-#participantePontos{font-size:17px;margin-top:0}
+.hudLinha strong{font-size:19px;color:#fff}
+#participantePontos{font-size:19px}
 .hudProgresso{
-margin-top:8px;
-padding-top:7px;
+margin-top:9px;padding-top:8px;
 border-top:1px solid rgba(255,255,255,.2);
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:3px 6px;
+display:grid;grid-template-columns:1fr 1fr;gap:4px 7px;
 }
 .hudValor{
-font-size:10px;
-color:rgba(255,255,255,.55);
-padding:3px 5px;
-border-radius:4px;
-text-align:right;
+font-size:11px;color:rgba(255,255,255,.5);
+padding:4px 6px;border-radius:4px;text-align:right;
 }
-.hudValor.atual{
-color:#ffd84a;
-background:rgba(255,216,74,.14);
-font-weight:800;
+.hudValor.atual{color:#ffd84a;background:rgba(255,216,74,.16);font-weight:900}
+.hudValor.feito{color:#8cff9a;font-weight:800}
+
+/* CAIXA DO NOME */
+#nomeBox{
+display:none;position:absolute;right:4%;bottom:4%;z-index:30;
+width:min(380px,92vw);box-sizing:border-box;padding:18px;
+border-radius:14px;background:rgba(35,70,20,.96);
+backdrop-filter:blur(8px);
+box-shadow:0 8px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);
+border:1px solid rgba(255,255,255,.15);
 }
-.hudValor.feito{color:#8cff9a;}
->
+#nome{
+display:block;width:100%;height:52px;padding:0 16px;box-sizing:border-box;
+border:2px solid #fff;border-radius:8px;background:#fff;color:#111;
+font-size:18px;font-weight:500;text-align:left;outline:none;
+}
+#nome:focus{border-color:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.4)}
+#entrar{
+display:block;position:static !important;width:180px;max-width:100%;
+height:48px;margin:14px auto 0 !important;border:0;border-radius:8px;
+background:#fff;color:#1a3310;font-size:19px;font-weight:800;
+letter-spacing:.5px;cursor:pointer;
+}
+#entrar.jogarPos{
+position:fixed !important;right:4% !important;bottom:5% !important;
+left:auto !important;top:auto !important;z-index:40;
+width:220px;height:60px;margin:0 !important;transform:none !important;
+}
+</style>
+</head>
+<body>
+<div id="tela">
+<img id="imagem" alt="Guima Show">
+
+<div id="participanteInfo">
+  <div class="hudTitulo">GUIMA SHOW • PARTICIPANTE</div>
+  <div id="participanteNome">PARTICIPANTE</div>
+  <div class="hudLinha"><span>TEMPO</span><strong id="cronometro">00:00</strong></div>
+  <div class="hudLinha"><span>PRÊMIO</span><strong id="participantePontos">R$ 0</strong></div>
+  <div class="hudProgresso">
+    <div class="hudValor atual" data-valor="1000">R$ 1.000</div>
+    <div class="hudValor" data-valor="5000">R$ 5.000</div>
+    <div class="hudValor" data-valor="10000">R$ 10.000</div>
+    <div class="hudValor" data-valor="30000">R$ 30.000</div>
+    <div class="hudValor" data-valor="50000">R$ 50.000</div>
+    <div class="hudValor" data-valor="100000">R$ 100.000</div>
+    <div class="hudValor" data-valor="200000">R$ 200.000</div>
+    <div class="hudValor" data-valor="400000">R$ 400.000</div>
+    <div class="hudValor" data-valor="500000">R$ 500.000</div>
+    <div class="hudValor" data-valor="1000000">R$ 1.000.000</div>
+  </div>
+</div>
+
+<div id="nomeBox">
+<input id="nome" type="text" maxlength="40" placeholder="Digite seu nome" autocomplete="off">
+<button id="entrar">JOGAR</button>
+</div>
+</div>
+
+<script>
+const BASE="https://github.com/Fernandohsanto/Guima-Show/raw/refs/heads/main/";
+const imagem=document.getElementById("imagem");
+const nomeBox=document.getElementById("nomeBox");
+const nomeInput=document.getElementById("nome");
+const entrar=document.getElementById("entrar");
+const participanteInfo=document.getElementById("participanteInfo");
+const participanteNome=document.getElementById("participanteNome");
+const participantePontos=document.getElementById("participantePontos");
+const cronometro=document.getElementById("cronometro");
+const hudValores=[...document.querySelectorAll(".hudValor")];
+
+const inicioImg=BASE+"inicio.png.png";
+const regrasImg=BASE+"regras.PNG";
+const conhecerImg="https://github.com/Fernandohsanto/Guima-Show/raw/refs/heads/main/vamos%20conhecer%20participante.png";
+const ouro1Img=BASE+"ouro%201%20mil.PNG";
+const pergunta1Img=BASE+"pergunta%201.PNG";
+
+const audioPerguntas=new Audio("https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/M%C3%BAsica%20suspense%20de%20perguntas.mp3");
+const audioTema=new Audio(BASE+"Musica%20tema%20show%20do%20milh%C3%A3o.mp3");
+const audioRegras=new Audio(BASE+"Vai%20comecar%20o%20show%20do%20milhao.mp3");
+const audioConhecer=new Audio(BASE+"Vamos%20conhecer%20o%20nosso%20participante%20.mp3");
+const audioOuro1=new Audio("https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/1%20Mil.mp3");
+const boaSorteAudio=new Audio("https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/Boa%20Sorte.mp3");
+
+audioPerguntas.preload="auto";
+boaSorteAudio.preload="auto";
+
+let etapa=1;
+let participante="";
+let pontos=0;
+let inicioCronometro=0;
+let intervaloCronometro=null;
+let tempoFinal=0;
+
+function formatarTempo(segundos){
+const m=Math.floor(segundos/60).toString().padStart(2,"0");
+const s=Math.floor(segundos%60).toString().padStart(2,"0");
+return m+":"+s;
+}
+function iniciarCronometro(){
+clearInterval(intervaloCronometro);
+inicioCronometro=Date.now();
+tempoFinal=0;
+cronometro.textContent="00:00";
+intervaloCronometro=setInterval(()=>{
+const decorrido=Math.floor((Date.now()-inicioCronometro)/1000);
+cronometro.textContent=formatarTempo(decorrido);
+},250);
+}
+function pararCronometro(){
+if(inicioCronometro){
+tempoFinal=Math.floor((Date.now()-inicioCronometro)/1000);
+cronometro.textContent=formatarTempo(tempoFinal);
+}
+clearInterval(intervaloCronometro);
+intervaloCronometro=null;
+}
+function atualizarProgresso(){
+hudValores.forEach(el=>{
+const valor=Number(el.dataset.valor);
+el.classList.toggle("atual",valor===pontos+1000);
+el.classList.toggle("feito",valor<=pontos);
+});
+}
+function atualizarParticipante(){
+participanteNome.textContent=participante;
+participantePontos.textContent="R$ "+pontos.toLocaleString("pt-BR");
+participanteInfo.style.display=participante?"block":"none";
+atualizarProgresso();
+}
+function pararAudios(){
+[audioTema,audioRegras,audioConhecer,audioOuro1,boaSorteAudio,audioPerguntas].forEach(a=>{
+a.pause();a.currentTime=0;
+});
+}
+
+function mostrarInicio(){
+etapa=1;
+nomeBox.style.display="none";
+entrar.textContent="JOGAR";
+entrar.classList.add("jogarPos");
+participanteInfo.style.display="none";
+pararCronometro();
+cronometro.textContent="00:00";
+imagem.src=inicioImg;
+pararAudios();
+audioTema.play().catch(()=>{});
+}
+function mostrarRegras(){
+etapa=2;
+nomeBox.style.display="none";
+participanteInfo.style.display="none";
+imagem.src=regrasImg;
+pararAudios();
+audioRegras.play().catch(()=>{});
+}
+function mostrarAudioConhecer(){
+etapa=3;
+nomeBox.style.display="none";
+pararAudios();
+audioConhecer.play().catch(()=>{});
+audioConhecer.onended=mostrarTelaConhecer;
+}
+function mostrarTelaConhecer(){
+etapa=4;
+imagem.src=conhecerImg;
+nomeBox.style.display="block";
+nomeInput.style.display="block";
+entrar.style.display="block";
+entrar.textContent="ENTRAR";
+entrar.classList.remove("jogarPos");
+nomeInput.value="";
+setTimeout(()=>nomeInput.focus(),100);
+}
+function mostrarOuro1(){
+etapa=5;
+nomeBox.style.display="none";
+pontos=0;
+atualizarParticipante();
+imagem.src=ouro1Img;
+pararAudios();
+audioOuro1.play().catch(()=>{});
+audioOuro1.onended=mostrarPergunta1;
+}
+function mostrarPergunta1(){
+etapa=6;
+nomeBox.style.display="none";
+imagem.src=pergunta1Img;
+audioTema.pause();audioRegras.pause();audioConhecer.pause();audioOuro1.pause();boaSorteAudio.pause();
+participanteInfo.style.display="block";
+iniciarCronometro();
+audioPerguntas.currentTime=0;
+audioPerguntas.play().catch(()=>{});
+}
+function concluirJogo(){pararCronometro();}
+function entrarParticipante(){
+const nome=nomeInput.value.trim();
+if(!nome){nomeInput.focus();return}
+participante=nome;
+pontos=0;
+atualizarParticipante();
+pararAudios();
+boaSorteAudio.currentTime=0;
+boaSorteAudio.onended=mostrarOuro1;
+boaSorteAudio.play().catch(()=>mostrarOuro1());
+}
+document.getElementById("tela").addEventListener("click",function(){
+if(etapa===1){mostrarRegras();return}
+if(etapa===2){mostrarAudioConhecer();return}
+if(etapa===5){mostrarPergunta1();return}
+});
+entrar.addEventListener("click",function(e){
+e.stopPropagation();
+if(etapa===1){mostrarRegras();return}
+entrarParticipante();
+});
+nomeInput.addEventListener("click",e=>e.stopPropagation());
+nomeInput.addEventListener("keydown",function(e){
+if(e.key==="Enter"){e.preventDefault();entrarParticipante()}
+});
+window.addEventListener("load",mostrarInicio);
+</script>
+</body>
+</html>

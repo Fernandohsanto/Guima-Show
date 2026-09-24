@@ -10,16 +10,16 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden}
 body{display:flex;align-items:center;justify-content:center}
 #tela{position:relative;width:min(100vw,177.7778vh);height:min(100vh,56.25vw);aspect-ratio:16/9;background:#000;overflow:hidden}
 #imagem{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;cursor:pointer}
-#nomeBox{display:none;position:absolute;inset:0;z-index:5;pointer-events:none}
-#nome{position:absolute;left:67.7%;top:91.0%;transform:translate(-50%,-50%);width:33.0%;height:4.1%;padding:0 12px;border:0;background:transparent;color:#111;font-size:20px;text-align:left;outline:none;pointer-events:auto}
-#entrar{position:absolute;left:67.7%;top:96.8%;transform:translate(-50%,-50%);width:180px;height:48px;border:0;border-radius:7px;background:#fff;color:#111;font-size:20px;font-weight:bold;cursor:pointer;pointer-events:auto}
+#nomeBox{display:none;position:absolute;right:4%;bottom:4%;z-index:5;width:min(380px,32vw);padding:18px;border-radius:14px;background:rgba(35,70,20,.96);box-shadow:0 4px 18px rgba(0,0,0,.45);pointer-events:auto}
+#nome{display:block;width:100%;height:52px;padding:0 16px;border:2px solid #fff;border-radius:8px;background:#fff;color:#111;font-size:20px;text-align:left;outline:none}
+#entrar{display:block;width:180px;height:48px;margin:12px 0 0 auto;border:0;border-radius:8px;background:#fff;color:#111;font-size:20px;font-weight:bold;cursor:pointer}
 </style>
 </head>
 <body>
 <div id="tela">
 <img id="imagem" alt="Guima Show">
 <div id="nomeBox">
-<input id="nome" type="text" maxlength="40" placeholder="" autocomplete="off">
+<input id="nome" type="text" maxlength="40" placeholder="Digite seu nome" autocomplete="off">
 <button id="entrar">ENTRAR</button>
 </div>
 </div>

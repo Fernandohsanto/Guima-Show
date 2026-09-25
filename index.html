@@ -280,7 +280,7 @@ audioPerguntas.volume=0.7;
 audioPerguntas.play().catch(()=>{});
 }
 function concluirJogo(){pararCronometro();}
-function marcarResposta(numero){const posicoes={1:[10.5,39.6],2:[10.5,47.6],3:[10.5,55.5],4:[10.5,63.5]};const p=posicoes[numero];respostaMarker.style.left=p[0]+"%";respostaMarker.style.top=p[1]+"%";respostaMarker.style.display="block";}
+function marcarResposta(numero){const posicoes={1:[10.8,43.2],2:[10.8,51.1],3:[10.8,59.0],4:[10.8,66.9]};const p=posicoes[numero];respostaMarker.style.left=p[0]+"%";respostaMarker.style.top=p[1]+"%";respostaMarker.style.display="block";}
 function executarResultado(){confirmacao.style.display="none";processandoResposta=false;areasResposta.forEach(el=>el.style.display="none");if(respostaSelecionada===1){audioCertaResposta.currentTime=0;audioCertaResposta.play().catch(()=>{});pontos=1000;atualizarParticipante();}else{audioErrou.currentTime=0;audioErrou.play().catch(()=>{});}}
 function confirmarResposta(){confirmacao.style.display="block";audioCerteza.currentTime=0;audioCerteza.play().catch(()=>{});}
 function selecionarResposta(numero){if(etapa!==6||processandoResposta)return;processandoResposta=true;respostaSelecionada=numero;marcarResposta(numero);audioPerguntas.pause();confirmarResposta();}

@@ -258,6 +258,7 @@ iniciarCronometro();
 audioPerguntas.currentTime=0;
 audioPerguntas.muted=false;
 audioPerguntas.volume=0.7;
+audioPerguntas.play().catch(()=>{});
 }
 function concluirJogo(){pararCronometro();}
 function entrarParticipante(){

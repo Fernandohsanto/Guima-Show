@@ -270,7 +270,7 @@ pararAudios();
 /* Libera o áudio no clique do participante para o navegador permitir a reprodução depois. */
 audioPerguntas.muted=true;
 audioPerguntas.currentTime=0;
-audioPerguntas.play().then(()=>{audioPerguntas.pause();audioPerguntas.currentTime=0;}).catch(()=>{});
+audioPerguntas.play().catch(()=>{});
 boaSorteAudio.currentTime=0;
 boaSorteAudio.onended=mostrarOuro1;
 boaSorteAudio.play().catch(()=>mostrarOuro1());

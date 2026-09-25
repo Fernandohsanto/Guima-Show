@@ -142,6 +142,7 @@ const audioOuro1=new Audio("https://raw.githubusercontent.com/Fernandohsanto/Gui
 const boaSorteAudio=new Audio("https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/Boa%20Sorte.mp3");
 
 audioPerguntas.preload="auto";
+audioPerguntas.loop=true;
 audioPerguntas.volume=0.7;
 boaSorteAudio.preload="auto";
 
@@ -252,11 +253,9 @@ imagem.src=pergunta1Img;
 audioTema.pause();audioRegras.pause();audioConhecer.pause();audioOuro1.pause();boaSorteAudio.pause();
 participanteInfo.style.display="block";
 iniciarCronometro();
-audioPerguntas.pause();
 audioPerguntas.currentTime=0;
 audioPerguntas.muted=false;
 audioPerguntas.volume=0.7;
-audioPerguntas.play().catch(()=>{});
 }
 function concluirJogo(){pararCronometro();}
 function entrarParticipante(){

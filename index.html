@@ -206,6 +206,7 @@ cronometro.textContent="00:00";
 imagem.src=inicioImg;
 pararAudios();
 audioTema.play().catch(()=>{});
+document.addEventListener("click",function(){if(etapa===1){audioTema.play().catch(()=>{});}}, {once:true});
 }
 function mostrarRegras(){
 etapa=2;
@@ -251,6 +252,7 @@ audioTema.pause();audioRegras.pause();audioConhecer.pause();audioOuro1.pause();b
 participanteInfo.style.display="block";
 iniciarCronometro();
 audioPerguntas.currentTime=0;
+audioPerguntas.load();
 audioPerguntas.play().catch(()=>{});
 }
 function concluirJogo(){pararCronometro();}

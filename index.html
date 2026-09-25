@@ -15,11 +15,11 @@ body{display:flex;align-items:center;justify-content:center}
 #participanteInfo{
 display:none;
 position:absolute;
-left:2.2%;
-top:3%;
+left:1.8%;
+top:1.5%;
 z-index:20;
-width:270px;
-padding:12px;
+width:190px;
+padding:8px;
 border:2px solid #d8b34a;
 border-radius:12px;
 background:linear-gradient(180deg,rgba(5,24,12,.98),rgba(16,58,22,.96));
@@ -30,31 +30,31 @@ text-shadow:1px 2px 3px #000;
 pointer-events:none;
 }
 .hudTitulo{
-font-size:12px;font-weight:900;letter-spacing:2px;color:#ffd84a;
-text-align:center;padding-bottom:7px;margin-bottom:8px;
+font-size:9px;font-weight:900;letter-spacing:1.4px;color:#ffd84a;
+text-align:center;padding-bottom:5px;margin-bottom:5px;
 border-bottom:1px solid rgba(255,216,74,.5);
 }
 #participanteNome{
-font-size:22px;font-weight:900;text-align:center;
+font-size:16px;font-weight:900;text-align:center;
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-margin-bottom:9px;
+margin-bottom:5px;
 }
 .hudLinha{
 display:flex;justify-content:space-between;align-items:center;
-padding:6px 8px;margin-top:5px;border-radius:5px;
+padding:4px 6px;margin-top:3px;border-radius:4px;
 background:rgba(0,0,0,.32);
-font-size:11px;font-weight:800;letter-spacing:1px;
+font-size:9px;font-weight:800;letter-spacing:.8px;
 }
-.hudLinha strong{font-size:19px;color:#fff}
-#participantePontos{font-size:19px}
+.hudLinha strong{font-size:15px;color:#fff}
+#participantePontos{font-size:15px}
 .hudProgresso{
-margin-top:9px;padding-top:8px;
+margin-top:5px;padding-top:5px;
 border-top:1px solid rgba(255,255,255,.2);
-display:grid;grid-template-columns:1fr 1fr;gap:4px 7px;
+display:grid;grid-template-columns:1fr 1fr;gap:2px 4px;
 }
 .hudValor{
-font-size:11px;color:rgba(255,255,255,.5);
-padding:4px 6px;border-radius:4px;text-align:right;
+font-size:9px;color:rgba(255,255,255,.5);
+padding:2px 4px;border-radius:3px;text-align:right;
 }
 .hudValor.atual{color:#ffd84a;background:rgba(255,216,74,.16);font-weight:900}
 .hudValor.feito{color:#8cff9a;font-weight:800}
@@ -195,7 +195,9 @@ a.pause();a.currentTime=0;
 
 function mostrarInicio(){
 etapa=1;
-nomeBox.style.display="none";
+nomeBox.style.display="block";
+nomeInput.style.display="none";
+entrar.style.display="block";
 entrar.textContent="JOGAR";
 entrar.classList.add("jogarPos");
 participanteInfo.style.display="none";

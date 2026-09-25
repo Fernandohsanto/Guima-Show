@@ -9,7 +9,10 @@
 html,body{width:100%;height:100%;background:#000;overflow:hidden}
 body{display:flex;align-items:center;justify-content:center}
 #tela{position:relative;width:min(100vw,177.7778vh);height:min(100vh,56.25vw);aspect-ratio:16/9;background:#000;overflow:hidden}
-#imagem{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;cursor:pointer}
+#imagem{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;cursor:default}
+#respostaMarker{display:none;position:absolute;z-index:25;width:48px;height:48px;border:5px solid #f00;border-radius:50%;box-shadow:0 0 12px rgba(255,0,0,.9);pointer-events:none;transform:translate(-50%,-50%)}
+#confirmacao{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:50;padding:16px 28px;border:3px solid #d8b34a;border-radius:12px;background:rgba(0,0,0,.94);color:#fff;font:bold 22px Arial,sans-serif;text-align:center;box-shadow:0 0 25px rgba(0,0,0,.8)}
+#confirmacao small{display:block;margin-top:8px;color:#ffd84a;font-size:13px}
 
 /* PAINEL DO PARTICIPANTE */
 #participanteInfo{
@@ -90,7 +93,7 @@ width:220px;height:60px;margin:0 !important;transform:none !important;
 <body>
 <div id="tela">
 <img id="imagem" alt="Guima Show">
-<audio id="audioPerguntas" preload="auto" loop playsinline src="https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/Musica%20suspense%20de%20perguntas.mp3"></audio>
+<div id="respostaMarker"></div><div id="confirmacao">VOCÊ TEM CERTEZA?<small>POSSO PERGUNTAR?</small></div><audio id="audioPerguntas" preload="auto" loop playsinline src="https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/Musica%20suspense%20de%20perguntas.mp3"></audio>
 
 <div id="participanteInfo">
   <div class="hudTitulo">GUIMA SHOW • PARTICIPANTE</div>
@@ -128,6 +131,12 @@ const participanteNome=document.getElementById("participanteNome");
 const participantePontos=document.getElementById("participantePontos");
 const cronometro=document.getElementById("cronometro");
 const hudValores=[...document.querySelectorAll(".hudValor")];
+const respostaMarker=document.getElementById("respostaMarker");
+const confirmacao=document.getElementById("confirmacao");
+const audioCerteza=new Audio(BASE+"Voc%C3%AA%20tem%20certeza.mp3");
+const audioPossoPerguntar=new Audio(BASE+"Posso%20perguntar.mp3");
+const audioCertaResposta=new Audio(BASE+"certa%20resposta.mp3");
+const audioErrou=new Audio(BASE+"Que%20pena%20vc%20errou.mp3");
 
 const inicioImg=BASE+"inicio.png.png";
 const regrasImg=BASE+"regras.PNG";
@@ -154,6 +163,8 @@ let pontos=0;
 let inicioCronometro=0;
 let intervaloCronometro=null;
 let tempoFinal=0;
+let respostaSelecionada=0;
+let processandoResposta=false;
 
 function formatarTempo(segundos){
 const m=Math.floor(segundos/60).toString().padStart(2,"0");
@@ -261,6 +272,10 @@ audioPerguntas.volume=0.7;
 audioPerguntas.play().catch(()=>{});
 }
 function concluirJogo(){pararCronometro();}
+function marcarResposta(x,y){respostaMarker.style.left=x+"%";respostaMarker.style.top=y+"%";respostaMarker.style.display="block";}
+function executarResultado(){confirmacao.style.display="none";processandoResposta=false;if(respostaSelecionada===1){audioCertaResposta.currentTime=0;audioCertaResposta.play().catch(()=>{});pontos=1000;atualizarParticipante();}else{audioErrou.currentTime=0;audioErrou.play().catch(()=>{});}}
+function confirmarResposta(){confirmacao.style.display="block";audioCerteza.currentTime=0;audioCerteza.onended=()=>{audioPossoPerguntar.currentTime=0;audioPossoPerguntar.onended=executarResultado;audioPossoPerguntar.play().catch(()=>executarResultado());};audioCerteza.play().catch(()=>{audioPossoPerguntar.currentTime=0;audioPossoPerguntar.onended=executarResultado;audioPossoPerguntar.play().catch(()=>executarResultado());});}
+function selecionarResposta(numero,x,y){if(etapa!==6||processandoResposta)return;processandoResposta=true;respostaSelecionada=numero;marcarResposta(x,y);audioPerguntas.pause();confirmarResposta();}
 function entrarParticipante(){
 const nome=nomeInput.value.trim();
 if(!nome){nomeInput.focus();return}
@@ -276,10 +291,19 @@ boaSorteAudio.currentTime=0;
 boaSorteAudio.onended=mostrarOuro1;
 boaSorteAudio.play().catch(()=>mostrarOuro1());
 }
-document.getElementById("tela").addEventListener("click",function(){
+document.getElementById("tela").addEventListener("click",function(e){
 if(etapa===1){mostrarRegras();return}
 if(etapa===2){mostrarAudioConhecer();return}
 if(etapa===5){mostrarPergunta1();return}
+if(etapa===6&&!processandoResposta){
+const r=document.getElementById("tela").getBoundingClientRect();
+const x=((e.clientX-r.left)/r.width)*100;
+const y=((e.clientY-r.top)/r.height)*100;
+let numero=0;
+if(y>=48&&y<72)numero=x<50?1:2;
+else if(y>=72)numero=x<50?3:4;
+if(numero)selecionarResposta(numero,x,y);
+}
 });
 entrar.addEventListener("click",function(e){
 e.stopPropagation();

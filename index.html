@@ -90,6 +90,7 @@ width:220px;height:60px;margin:0 !important;transform:none !important;
 <body>
 <div id="tela">
 <img id="imagem" alt="Guima Show">
+<audio id="audioPerguntas" preload="auto" loop playsinline><source src="./Musica%20suspense%20de%20perguntas.mp3" type="audio/mpeg"></audio>
 
 <div id="participanteInfo">
   <div class="hudTitulo">GUIMA SHOW • PARTICIPANTE</div>
@@ -134,7 +135,7 @@ const conhecerImg="https://github.com/Fernandohsanto/Guima-Show/raw/refs/heads/m
 const ouro1Img=BASE+"ouro%201%20mil.PNG";
 const pergunta1Img=BASE+"pergunta%201.PNG";
 
-const audioPerguntas=new Audio("./Musica%20suspense%20de%20perguntas.mp3?v=2");
+const audioPerguntas=document.getElementById("audioPerguntas");
 const audioTema=new Audio("https://raw.githubusercontent.com/Fernandohsanto/Guima-Show/main/M%C3%BAsica%20tema%20show%20do%20milh%C3%A3o.mp3");
 const audioRegras=new Audio(BASE+"Vai%20comecar%20o%20show%20do%20milhao.mp3");
 const audioConhecer=new Audio(BASE+"Vamos%20conhecer%20o%20nosso%20participante%20.mp3");
@@ -266,10 +267,10 @@ participante=nome;
 pontos=0;
 atualizarParticipante();
 pararAudios();
-/* Libera o áudio no clique do participante, sem som. */
+/* Libera o áudio no clique do participante para o navegador permitir a reprodução depois. */
 audioPerguntas.muted=true;
 audioPerguntas.currentTime=0;
-audioPerguntas.play().catch(()=>{});
+audioPerguntas.play().then(()=>{audioPerguntas.pause();audioPerguntas.currentTime=0;}).catch(()=>{});
 boaSorteAudio.currentTime=0;
 boaSorteAudio.onended=mostrarOuro1;
 boaSorteAudio.play().catch(()=>mostrarOuro1());
